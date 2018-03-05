@@ -1,6 +1,6 @@
 import socket
 import pygame
-
+import time
 msgFromClient = "Hello UDP Server"
 length = 400
 graph = []
@@ -14,11 +14,16 @@ MESSAGE = "test"
 print("UDP target IP:", UDP_IP)
 print("UDP target port:", UDP_PORT)
 print("message:", MESSAGE)
-
+x = 0
+t=0
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 
 sock.sendto(bytes(MESSAGE, "utf-8"), (UDP_IP, UDP_PORT))
+msgFromServer = sock.recvfrom(bufferSize)
+
 while not done:
+    slope = msgFromServer[0]
+
     screen.fill((5, 5, 5))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,5 +38,8 @@ while not done:
 
     for x in range(len(graph)-1):
         screen.set_at((x, (graph[x]+2)*100), (255, 255, 255, 255))
-    print(int(msgFromServer[0]))
+    if slope != msgFromServer[0]:
+        t = time.clock()-x
+        x = time.clock()
+        print(t)
     pygame.display.flip()
