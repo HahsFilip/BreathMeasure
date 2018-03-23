@@ -36,8 +36,15 @@ while not done:
 
        graph.append(int(float(msgFromServer[0])))
 
-    for x in range(len(graph)-1):
+    for x in range(len(graph)-2):
+
+
         screen.set_at((x, (graph[x]+2)), (255, 255, 255, 255))
+        screen.set_at((x, (graph[x]+3)), (255, 255, 255, 255))
+        screen.set_at((x, (graph[x]+1)), (255, 255, 255, 255))
+        screen.set_at((x-1, (graph[x]+2)), (255, 255, 255, 255))
+        screen.set_at((x+1, (graph[x]+2)), (255, 255, 255, 255))
+
   #  if slope != msgFromServer[0]:
   #      t = time.clock()-x
    #     x = time.clock()
