@@ -2,13 +2,13 @@ import socket
 import pygame
 import time
 msgFromClient = "Hello UDP Server"
-length = 400
+length = 1920
 graph = []
 pygame.init()
-screen = pygame.display.set_mode((length, 400))
+screen = pygame.display.set_mode((length, 1024))
 done = False
 bufferSize = 2048
-UDP_IP = "192.168.0.32"
+UDP_IP = "192.168.0.33"
 UDP_PORT = 4210
 MESSAGE = "test"
 print("UDP target IP:", UDP_IP)
@@ -22,7 +22,7 @@ sock.sendto(bytes(MESSAGE, "utf-8"), (UDP_IP, UDP_PORT))
 msgFromServer = sock.recvfrom(bufferSize)
 
 while not done:
-    slope = msgFromServer[0]
+    #slope = msgFromServer[0]
 
     screen.fill((5, 5, 5))
     for event in pygame.event.get():
@@ -31,15 +31,15 @@ while not done:
     msgFromServer = sock.recvfrom(bufferSize)
     if len(graph) >= length:
        graph.pop(0)
-       graph.append(int(msgFromServer[0]))
+       graph.append(int(float(msgFromServer[0])))
     else:
 
-       graph.append(int(msgFromServer[0]))
+       graph.append(int(float(msgFromServer[0])))
 
     for x in range(len(graph)-1):
-        screen.set_at((x, (graph[x]+2)*100), (255, 255, 255, 255))
-    if slope != msgFromServer[0]:
-        t = time.clock()-x
-        x = time.clock()
-        print(t)
+        screen.set_at((x, (graph[x]+2)), (255, 255, 255, 255))
+  #  if slope != msgFromServer[0]:
+  #      t = time.clock()-x
+   #     x = time.clock()
+    #    print(t)
     pygame.display.flip()
